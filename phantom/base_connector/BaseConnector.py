@@ -100,8 +100,11 @@ class BaseConnector(object):
         return self.product_version
 
     def load_state(self):
-        with open(self.state_file_location, 'r+') as state_file:
-            self.state = json.loads(state_file.read() or '{}')
+        if os.path.exists(self.state_file_location):
+            with open(self.state_file_location, 'r+') as state_file:
+                self.state = json.loads(state_file.read() or '{}')
+        else:
+            self.state = {}
         self.logger.info('load_state() - State: {}'.format(self.pp.pformat(self.state)))
         return self.state
 
@@ -188,13 +191,13 @@ class BaseConnector(object):
 
     def is_poll_now(self):
         return self.poll_now
-    
+
     def get_app_id(self):
         return self.app_id
 
     def get_asset_id(self):
         return self.asset_id
-        
+
     def set_validator(self, type=None, validation_function=None):
         # TODO: Make this do something. For now, it does nothing
         return None

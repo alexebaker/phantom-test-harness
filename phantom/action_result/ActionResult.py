@@ -27,7 +27,7 @@ class ActionResult():
     def add_data(self, data):
         self.data.append(data)
         self.logger.info('ActionResult.add_data() - Data (next line):\n{}'.format(self.pp.pformat(self.data)))
-        return
+        return data
 
     def get_data(self):
         return self.data
